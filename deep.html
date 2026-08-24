@@ -192,7 +192,8 @@
           <li><span class="no">2부</span><span><b>사랑의 갈망 강도 · 20문항</b> — 각 문장이 나에게 얼마나 해당하는지 5점 척도로 답합니다. 순위만이 아니라 절대 강도를 잽니다.</span></li>
           <li><span class="no">3부</span><span><b>내가 표현하는 방식 · 15문항</b> — 내가 사랑을 <b>주는</b> 방식을 측정해, 받고 싶은 방식과 비교합니다.</span></li>
         </ul>
-        <p style="margin-top:16px">배우자·연인·가족 등 <b>가장 가까운 사람과의 관계</b>를 떠올리며 답해주세요. 결과 코드를 서로 교환하면 <b>두 사람의 프로필 비교</b>도 볼 수 있습니다.</p>
+        <p style="margin-top:16px">배우자·연인·가족 등 <b>가장 가까운 사람과의 관계</b>를 떠올리며 답해주세요. 1부에서 두 문장이 <b>모두 좋게 느껴지는 게 정상</b>입니다 — 그래도 굳이 하나를 고르는 그 선택이 당신의 우선순위를 보여줍니다.</p>
+        <p>결과 코드를 서로 교환하면 <b>두 사람의 프로필 비교</b>도 볼 수 있습니다.</p>
       </div>
 
       <div class="meta-row">
@@ -565,7 +566,7 @@ function renderQuestion() {
 
   if (phase === 1) {
     document.getElementById('quiz-prompt').innerHTML = '두 가지 중, 내 마음이<br>더 따뜻해지는 순간은 언제인가요?';
-    document.getElementById('quiz-hint').textContent = '오래 고민하지 말고, 먼저 끌리는 쪽을 선택하세요.';
+    document.getElementById('quiz-hint').textContent = '둘 다 좋게 느껴져도 괜찮아요 — 먼저 끌리는 쪽을 선택하세요.';
     const qi = fcOrder[cur];
     const q = FC[qi];
     const opts = fcFlip[cur] ? [q.b, q.a] : [q.a, q.b];
