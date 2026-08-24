@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>다섯 가지 사랑의 언어 검사 — 라이트</title>
+<meta name="description" content="게리 채프먼의 '5가지 사랑의 언어' 개념을 바탕으로 한 성인용 자가 검사. 30문항, 약 7분.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #FAF6EF;
+    --paper: #FFFDF8;
+    --ink: #2B2430;
+    --ink-soft: #5C5462;
+    --ink-faint: #8B8390;
+    --line: #E5DCCE;
+    --primary: #8E3B52;
+    --primary-deep: #6E2C3F;
+    --gold: #B98A4B;
+    --serif: 'Gowun Batang', 'Nanum Myeongjo', serif;
+    --sans: 'Noto Sans KR', -apple-system, sans-serif;
+    --c-words: #C07A3A;
+    --c-time: #5C7A63;
+    --c-gifts: #A84A5E;
+    --c-service: #4E6A88;
+    --c-touch: #7C5E9E;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-weight: 400;
+    line-height: 1.7;
+    min-height: 100dvh;
+  }
+  .wrap { max-width: 720px; margin: 0 auto; padding: 0 24px 80px; }
+  .screen { display: none; }
+  .screen.active { display: block; animation: fadeUp .5s ease both; }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+
+  /* ───────── 표지 ───────── */
+  .cover { padding-top: 72px; text-align: center; }
+  .cover-rule { width: 42px; height: 2px; background: var(--gold); margin: 0 auto 28px; }
+  .cover-eyebrow {
+    font-size: 13px; letter-spacing: .35em; text-indent: .35em;
+    color: var(--gold); font-weight: 500; margin-bottom: 20px;
+  }
+  .cover h1 {
+    font-family: var(--serif); font-weight: 700;
+    font-size: clamp(34px, 7vw, 52px); line-height: 1.35;
+    margin-bottom: 18px;
+  }
+  .cover h1 .accent { color: var(--primary); }
+  .cover-sub {
+    font-family: var(--serif); font-size: clamp(16px, 3.5vw, 19px);
+    color: var(--ink-soft); margin-bottom: 44px;
+  }
+  .cover-card {
+    background: var(--paper); border: 1px solid var(--line);
+    border-radius: 4px; padding: 32px 28px; text-align: left;
+    margin-bottom: 32px;
+  }
+  .cover-card h2 {
+    font-family: var(--serif); font-size: 17px; font-weight: 700;
+    color: var(--primary-deep); margin-bottom: 14px;
+  }
+  .cover-card p { font-size: 15px; color: var(--ink-soft); margin-bottom: 12px; }
+  .cover-card p:last-child { margin-bottom: 0; }
+  .lang-chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 18px 0 4px; }
+  .chip {
+    font-size: 13px; font-weight: 500; padding: 6px 14px;
+    border-radius: 999px; color: #fff;
+  }
+  .meta-row {
+    display: flex; justify-content: center; gap: 28px;
+    font-size: 14px; color: var(--ink-faint); margin-bottom: 36px;
+  }
+  .meta-row b { color: var(--ink-soft); font-weight: 500; }
+  .btn {
+    display: inline-block; border: none; cursor: pointer;
+    font-family: var(--sans); font-size: 16px; font-weight: 500;
+    letter-spacing: .08em; padding: 16px 52px; border-radius: 999px;
+    background: var(--primary); color: #fff;
+    transition: background .2s, transform .15s;
+  }
+  .btn:hover { background: var(--primary-deep); transform: translateY(-1px); }
+  .btn-ghost {
+    background: transparent; color: var(--primary);
+    border: 1px solid var(--primary);
+  }
+  .btn-ghost:hover { background: rgba(142,59,82,.06); }
+  .footnote {
+    font-size: 12.5px; color: var(--ink-faint); margin-top: 40px; line-height: 1.8;
+  }
+
+  /* ───────── 문항 ───────── */
+  .quiz { padding-top: 48px; }
+  .progress-head {
+    display: flex; justify-content: space-between; align-items: baseline;
+    margin-bottom: 10px;
+  }
+  .progress-num { font-family: var(--serif); font-size: 15px; color: var(--primary); font-weight: 700; }
+  .progress-num span { color: var(--ink-faint); font-weight: 400; }
+  .progress-track {
+    height: 3px; background: var(--line); border-radius: 2px; overflow: hidden;
+    margin-bottom: 44px;
+  }
+  .progress-fill {
+    height: 100%; background: var(--primary); width: 0%;
+    transition: width .35s ease; border-radius: 2px;
+  }
+  .quiz-prompt {
+    font-family: var(--serif); text-align: center;
+    font-size: clamp(19px, 4.2vw, 23px); font-weight: 700;
+    line-height: 1.6; margin-bottom: 8px;
+  }
+  .quiz-hint {
+    text-align: center; font-size: 14px; color: var(--ink-faint); margin-bottom: 32px;
+  }
+  .options { display: flex; flex-direction: column; gap: 14px; }
+  .option {
+    background: var(--paper); border: 1.5px solid var(--line);
+    border-radius: 4px; padding: 22px 24px; cursor: pointer;
+    font-family: var(--serif); font-size: clamp(16px, 3.6vw, 18px);
+    line-height: 1.65; text-align: left; color: var(--ink);
+    transition: border-color .18s, background .18s, transform .12s;
+    display: flex; gap: 16px; align-items: flex-start;
+  }
+  .option:hover { border-color: var(--primary); background: #FDF8F4; }
+  .option:active { transform: scale(.99); }
+  .option .marker {
+    flex-shrink: 0; width: 26px; height: 26px; border-radius: 50%;
+    border: 1.5px solid var(--line); color: var(--ink-faint);
+    font-family: var(--sans); font-size: 13px; font-weight: 500;
+    display: flex; align-items: center; justify-content: center;
+    margin-top: 2px; transition: all .18s;
+  }
+  .option:hover .marker { border-color: var(--primary); color: var(--primary); }
+  .option.picked { border-color: var(--primary); background: #FBF2F0; }
+  .option.picked .marker { background: var(--primary); border-color: var(--primary); color: #fff; }
+  .quiz-nav { margin-top: 30px; text-align: center; }
+  .nav-back {
+    background: none; border: none; cursor: pointer;
+    font-family: var(--sans); font-size: 14px; color: var(--ink-faint);
+    padding: 8px 16px; transition: color .2s;
+  }
+  .nav-back:hover { color: var(--primary); }
+  .nav-back:disabled { opacity: .3; cursor: default; }
+
+  /* ───────── 결과 ───────── */
+  .result { padding-top: 64px; }
+  .result-eyebrow {
+    text-align: center; font-size: 13px; letter-spacing: .3em; text-indent: .3em;
+    color: var(--gold); font-weight: 500; margin-bottom: 16px;
+  }
+  .result-title {
+    font-family: var(--serif); text-align: center;
+    font-size: clamp(15px, 3.5vw, 17px); color: var(--ink-soft); margin-bottom: 6px;
+  }
+  .result-lang {
+    font-family: var(--serif); text-align: center; font-weight: 700;
+    font-size: clamp(32px, 7vw, 44px); line-height: 1.4; margin-bottom: 34px;
+  }
+  .primary-card {
+    background: var(--paper); border: 1px solid var(--line);
+    border-top: 3px solid var(--primary); border-radius: 4px;
+    padding: 34px 30px; margin-bottom: 44px;
+  }
+  .primary-card .lead {
+    font-family: var(--serif); font-size: clamp(16px, 3.6vw, 17.5px);
+    line-height: 1.9; margin-bottom: 26px;
+  }
+  .detail-block { margin-bottom: 24px; }
+  .detail-block:last-child { margin-bottom: 0; }
+  .detail-block h3 {
+    font-size: 13.5px; font-weight: 700; letter-spacing: .12em;
+    color: var(--primary-deep); margin-bottom: 8px;
+  }
+  .detail-block ul { list-style: none; }
+  .detail-block li {
+    font-size: 15px; color: var(--ink-soft); padding-left: 16px;
+    position: relative; margin-bottom: 6px;
+  }
+  .detail-block li::before {
+    content: ''; position: absolute; left: 0; top: 11px;
+    width: 5px; height: 5px; border-radius: 50%; background: var(--gold);
+  }
+  .section-label {
+    font-family: var(--serif); font-size: 20px; font-weight: 700;
+    text-align: center; margin-bottom: 6px;
+  }
+  .section-sub { text-align: center; font-size: 14px; color: var(--ink-faint); margin-bottom: 28px; }
+  .bars { display: flex; flex-direction: column; gap: 18px; margin-bottom: 48px; }
+  .bar-row { }
+  .bar-head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 6px; }
+  .bar-name { font-family: var(--serif); font-size: 16px; font-weight: 700; }
+  .bar-rank {
+    font-size: 12px; color: var(--ink-faint); font-weight: 400; margin-left: 8px;
+  }
+  .bar-score { font-family: var(--serif); font-size: 15px; color: var(--ink-soft); }
+  .bar-score b { font-size: 18px; color: var(--ink); }
+  .bar-track { height: 12px; background: #EFE8DB; border-radius: 999px; overflow: hidden; }
+  .bar-fill { height: 100%; border-radius: 999px; width: 0; transition: width 1s cubic-bezier(.2,.7,.3,1); }
+  .balance-note {
+    background: #F5EFE4; border-radius: 4px; padding: 18px 22px;
+    font-size: 14px; color: var(--ink-soft); margin: -28px 0 48px; line-height: 1.8;
+  }
+  .all-langs { display: flex; flex-direction: column; gap: 14px; margin-bottom: 48px; }
+  .mini-card {
+    background: var(--paper); border: 1px solid var(--line); border-radius: 4px;
+    padding: 20px 22px; border-left: 3px solid transparent;
+  }
+  .mini-card h4 {
+    font-family: var(--serif); font-size: 16px; font-weight: 700; margin-bottom: 6px;
+    display: flex; align-items: baseline; gap: 10px;
+  }
+  .mini-card h4 .en { font-family: var(--sans); font-size: 11.5px; font-weight: 400; color: var(--ink-faint); letter-spacing: .05em; }
+  .mini-card p { font-size: 14px; color: var(--ink-soft); }
+  .result-actions { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin-bottom: 20px; }
+  .touch-note {
+    font-size: 13px; color: var(--ink-faint); text-align: center;
+    max-width: 480px; margin: 0 auto 8px; line-height: 1.8;
+  }
+
+  @media print {
+    body { background: #fff; }
+    .result-actions, .touch-note, .nav-back { display: none !important; }
+    .wrap { max-width: 100%; padding: 0 8mm; }
+  }
+  @media (max-width: 480px) {
+    .wrap { padding: 0 18px 60px; }
+    .cover { padding-top: 52px; }
+    .cover-card { padding: 26px 20px; }
+    .option { padding: 18px 18px; }
+    .primary-card { padding: 28px 22px; }
+    .meta-row { gap: 18px; font-size: 13px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- ═══════ 표지 ═══════ -->
+  <section class="screen active" id="screen-cover">
+    <div class="cover">
+      <div class="cover-rule"></div>
+      <div class="cover-eyebrow">LOVE LANGUAGE INVENTORY · LIGHT</div>
+      <h1>다섯 가지<br><span class="accent">사랑의 언어</span> 검사</h1>
+      <p class="cover-sub">나는 어떤 방식으로 사랑을 주고받을 때<br>마음이 가장 채워질까요?</p>
+
+      <div class="cover-card">
+        <h2>검사를 시작하기 전에</h2>
+        <p>사람마다 사랑을 느끼고 표현하는 <b>제1언어</b>가 다릅니다. 내가 아무리 애써 표현해도 상대의 언어가 아니라면 마음이 온전히 전해지지 않을 수 있습니다.</p>
+        <div class="lang-chips">
+          <span class="chip" style="background:var(--c-words)">인정하는 말</span>
+          <span class="chip" style="background:var(--c-time)">함께하는 시간</span>
+          <span class="chip" style="background:var(--c-gifts)">선물</span>
+          <span class="chip" style="background:var(--c-service)">봉사</span>
+          <span class="chip" style="background:var(--c-touch)">스킨십</span>
+        </div>
+        <p style="margin-top:14px">배우자·연인·가족 등 <b>가장 가까운 사람과의 관계</b>를 떠올리며, 두 문장 중 <b>내 마음에 더 와닿는 쪽</b>을 골라주세요. 정답은 없습니다.</p>
+      </div>
+
+      <div class="meta-row">
+        <div><b>30</b> 문항</div>
+        <div>약 <b>7</b>분</div>
+        <div>결과 <b>즉시 확인</b></div>
+      </div>
+
+      <button class="btn" onclick="startQuiz()">검사 시작하기</button>
+      <p style="margin-top:22px;font-size:14px"><a href="deep.html" style="color:var(--primary)">더 정밀한 결과가 필요하신가요? 심층 검사 →</a></p>
+
+      <p class="footnote">
+        이 검사는 게리 채프먼(Gary Chapman)의 『5가지 사랑의 언어』 개념을 바탕으로<br class="pc-br">
+        새롭게 구성한 자가 점검 도구입니다. 원저작의 공식 검사와는 다르며,<br class="pc-br">
+        교육·상담의 참고 자료로 활용해 주세요. 응답 내용은 어디에도 저장되지 않습니다.
+      </p>
+    </div>
+  </section>
+
+  <!-- ═══════ 문항 ═══════ -->
+  <section class="screen" id="screen-quiz">
+    <div class="quiz">
+      <div class="progress-head">
+        <div class="progress-num"><span id="q-cur">1</span><span> / 30</span></div>
+        <button class="nav-back" id="btn-back" onclick="goBack()">← 이전 문항</button>
+      </div>
+      <div class="progress-track"><div class="progress-fill" id="progress-fill"></div></div>
+      <p class="quiz-prompt">두 가지 중, 내 마음이<br>더 따뜻해지는 순간은 언제인가요?</p>
+      <p class="quiz-hint">오래 고민하지 말고, 먼저 끌리는 쪽을 선택하세요.</p>
+      <div class="options" id="options"></div>
+    </div>
+  </section>
+
+  <!-- ═══════ 결과 ═══════ -->
+  <section class="screen" id="screen-result">
+    <div class="result">
+      <div class="result-eyebrow">RESULT</div>
+      <p class="result-title">당신의 제1언어는</p>
+      <h2 class="result-lang" id="result-lang-name"></h2>
+
+      <div class="primary-card" id="primary-card"></div>
+
+      <h3 class="section-label">언어별 점수</h3>
+      <p class="section-sub">각 12점 만점 · 점수가 높을수록 그 언어로 사랑을 크게 느낍니다</p>
+      <div class="bars" id="bars"></div>
+      <div class="balance-note" id="balance-note" style="display:none"></div>
+
+      <h3 class="section-label">다섯 언어 한눈에 보기</h3>
+      <p class="section-sub">상대의 제1언어를 알면, 같은 마음도 더 깊이 전할 수 있습니다</p>
+      <div class="all-langs" id="all-langs"></div>
+
+      <p class="touch-note">* 스킨십 언어는 관계와 상황에 따라 편안한 정도가 다릅니다. 서로가 편안하게 여기는 방식과 정도를 존중하는 것이 언제나 먼저입니다.</p>
+      <div class="result-actions">
+        <button class="btn" onclick="saveImage()">결과 이미지 저장</button>
+        <button class="btn btn-ghost" onclick="window.print()">인쇄하기</button>
+        <button class="btn btn-ghost" onclick="restart()">다시 검사하기</button>
+      </div>
+      <p style="text-align:center;font-size:14px;margin-top:8px"><a href="deep.html" style="color:var(--primary)">수용·표현·강도까지 정밀하게 — 심층 검사 해보기 →</a></p>
+    </div>
+  </section>
+
+</div>
+
+<script>
+/* ───────────────────────── 데이터 ───────────────────────── */
+const LANGS = {
+  A: { key:'A', name:'인정하는 말',   en:'Words of Affirmation', color:'#C07A3A' },
+  B: { key:'B', name:'함께하는 시간', en:'Quality Time',          color:'#5C7A63' },
+  C: { key:'C', name:'선물',          en:'Receiving Gifts',       color:'#A84A5E' },
+  D: { key:'D', name:'봉사',          en:'Acts of Service',       color:'#4E6A88' },
+  E: { key:'E', name:'스킨십',        en:'Physical Touch',        color:'#7C5E9E' },
+};
+
+/* 30문항 — 5개 언어의 모든 짝(10가지) × 3회, 언어별 12회 등장 */
+const QUESTIONS = [
+  // 인정하는 말 vs 함께하는 시간
+  { a:['A','"당신 덕분이에요, 고마워요"라는 진심 어린 말을 들을 때'], b:['B','상대가 다른 일정을 미루고 나와 시간을 보내줄 때'] },
+  { a:['A','나의 수고를 알아보고 구체적으로 칭찬해줄 때'],           b:['B','하던 일을 멈추고 내 이야기에 온전히 귀 기울여줄 때'] },
+  { a:['A','"요즘 애 많이 썼어요"라고 내 노력을 인정받을 때'],       b:['B','단둘이 산책하며 이런저런 대화를 나눌 때'] },
+  // 인정하는 말 vs 선물
+  { a:['A','"당신은 내게 소중한 사람이에요"라는 말을 들을 때'],      b:['C','나를 생각하며 고른 작은 선물을 받을 때'] },
+  { a:['A','다른 사람들 앞에서 나를 인정하고 칭찬해줄 때'],          b:['C','출장이나 여행에서 내 몫의 선물을 챙겨올 때'] },
+  { a:['A','지쳐 있을 때 "당신은 잘 해낼 거예요"라는 격려를 들을 때'], b:['C','지나가듯 말한 것을 기억했다가 깜짝 선물로 받을 때'] },
+  // 인정하는 말 vs 봉사
+  { a:['A','쪽지나 메시지로 따뜻한 말을 받을 때'],                   b:['D','내가 바쁠 때 상대가 내 일을 말없이 나눠 맡아줄 때'] },
+  { a:['A','실수했을 때 "괜찮아요, 그럴 수 있어요"라고 다독여줄 때'], b:['D','무거운 짐을 먼저 알아채고 들어줄 때'] },
+  { a:['A','내 생각과 의견을 "좋은 생각이에요"라고 존중해줄 때'],    b:['D','몸이 아플 때 필요한 것을 챙겨다 줄 때'] },
+  // 인정하는 말 vs 스킨십
+  { a:['A','"오늘 정말 근사했어요"라는 말을 들을 때'],               b:['E','반갑게 손을 잡거나 팔짱을 껴줄 때'] },
+  { a:['A','상대가 다른 사람에게 나를 칭찬했다는 말을 전해 들을 때'], b:['E','속상할 때 말없이 안아줄 때'] },
+  { a:['A','"당신이 곁에 있어 다행이에요"라는 말을 들을 때'],        b:['E','힘내라며 어깨를 토닥여줄 때'] },
+  // 함께하는 시간 vs 선물
+  { a:['B','시간 가는 줄 모르고 함께 대화를 나눌 때'],               b:['C','직접 만들거나 정성이 담긴 선물을 받을 때'] },
+  { a:['B','함께 식사하며 하루 이야기를 나눌 때'],                   b:['C','기념일에 나를 위해 고민한 선물을 받을 때'] },
+  { a:['B','상대가 먼저 "주말에 같이 시간 보내요"라고 청할 때'],     b:['C','특별한 날이 아니어도 작은 선물을 건네받을 때'] },
+  // 함께하는 시간 vs 봉사
+  { a:['B','내 관심사에 관심을 갖고 함께 해줄 때'],                  b:['D','집안일이나 일의 힘든 부분을 대신 맡아줄 때'] },
+  { a:['B','힘든 날, 곁에 그냥 있어줄 때'],                          b:['D','부탁하기 전에 필요한 것을 먼저 해줄 때'] },
+  { a:['B','휴대폰을 내려놓고 내게 집중해줄 때'],                    b:['D','내가 미뤄둔 일을 조용히 처리해줄 때'] },
+  // 함께하는 시간 vs 스킨십
+  { a:['B','둘이서 좋아하는 것을 함께할 때'],                        b:['E','나란히 앉아 자연스럽게 손을 잡을 때'] },
+  { a:['B','함께 여행하거나 나들이할 때'],                           b:['E','집에 돌아왔을 때 반갑게 안아줄 때'] },
+  { a:['B','"우리 언제 볼까요?" 하고 나와의 약속을 먼저 잡아줄 때'], b:['E','오랜만에 만나 따뜻하게 포옹할 때'] },
+  // 선물 vs 봉사
+  { a:['C','내 취향에 꼭 맞는 선물을 받을 때'],                      b:['D','어려워하는 일을 함께 나서서 해결해줄 때'] },
+  { a:['C','응원 메모가 붙은 작은 꾸러미를 받을 때'],                b:['D','내가 중요한 일에 집중하도록 다른 일을 대신해줄 때'] },
+  { a:['C','편지나 사진처럼 추억이 담긴 선물을 받을 때'],            b:['D','비 오는 날 데리러 와주거나 우산을 챙겨줄 때'] },
+  // 선물 vs 스킨십
+  { a:['C','가방이나 주머니에 넣어둔 깜짝 선물을 발견할 때'],        b:['E','지나가며 가볍게 어깨나 등을 다독여줄 때'] },
+  { a:['C','나를 떠올리며 샀다는 물건을 받을 때'],                   b:['E','불안하고 떨릴 때 손을 꼭 잡아줄 때'] },
+  { a:['C','소박해도 의미가 담긴 선물을 받을 때'],                   b:['E','헤어질 때 안아주며 인사할 때'] },
+  // 봉사 vs 스킨십
+  { a:['D','힘든 일이 생겼을 때 실질적인 도움을 줄 때'],             b:['E','울고 싶을 때 등을 쓸어주며 곁에 있어줄 때'] },
+  { a:['D','내가 놓친 일을 알아채고 챙겨줄 때'],                     b:['E','기쁜 일이 생기면 얼싸안고 함께 기뻐할 때'] },
+  { a:['D','피곤한 날 식사나 집안일을 대신해줄 때'],                 b:['E','곁에 앉아 어깨를 내어줄 때'] },
+];
+
+const PROFILES = {
+  A: {
+    lead: '당신은 <b>말</b>로 사랑을 느끼는 사람입니다. 진심 어린 칭찬, 격려, 감사의 표현 한마디가 오래도록 마음에 남고, 반대로 비난이나 무심한 말에는 남들보다 깊이 상처받을 수 있습니다.',
+    filled: ['구체적인 칭찬과 인정의 말을 들을 때', '수고와 노력을 알아봐 줄 때', '따뜻한 메시지나 손편지를 받을 때'],
+    thirsty: ['"고맙다는 말 한마디가 그렇게 어렵나" 싶어질 때', '내 노력이 당연하게 여겨진다고 느낄 때', '칭찬보다 지적이 먼저 들려올 때'],
+    ask: '"오늘 나 애 많이 썼는데, 수고했다고 한마디만 해줄래요?" — 원하는 말을 구체적으로 청해도 괜찮습니다.',
+    give: ['결과만이 아니라 과정의 수고를 짚어 말해주세요', '고마움은 미루지 말고 그 자리에서 표현해주세요', '문자·쪽지 등 기록으로 남는 말은 힘이 두 배가 됩니다'],
+    mini: '진심 어린 칭찬과 감사, 격려의 말에 마음이 가장 크게 움직입니다.',
+  },
+  B: {
+    lead: '당신은 <b>온전히 함께하는 시간</b>으로 사랑을 느끼는 사람입니다. 무엇을 하느냐보다 서로에게 집중하고 있느냐가 중요하며, 함께 있어도 마음이 다른 곳에 가 있으면 오히려 외로움을 느낍니다.',
+    filled: ['방해받지 않고 둘만의 대화를 나눌 때', '상대가 나와의 약속을 우선순위에 둘 때', '눈을 맞추고 내 이야기를 끝까지 들어줄 때'],
+    thirsty: ['"같이 있어도 혼자 있는 것 같다"고 느껴질 때', '대화 중에 상대가 휴대폰만 볼 때', '늘 내가 먼저 시간을 내자고 해야 할 때'],
+    ask: '"이번 주에 우리 둘만의 시간을 한 번 가져요. 휴대폰은 잠시 내려놓고요." — 양보다 밀도를 청하세요.',
+    give: ['짧아도 좋으니 온전히 집중하는 시간을 정기적으로 만들어주세요', '대화할 때는 화면을 내려놓고 눈을 맞춰주세요', '함께하는 시간을 먼저 제안하는 것 자체가 사랑의 표현입니다'],
+    mini: '무엇을 하든, 서로에게 온전히 집중하는 시간에 마음이 채워집니다.',
+  },
+  C: {
+    lead: '당신은 <b>마음이 담긴 선물</b>로 사랑을 느끼는 사람입니다. 값어치가 아니라 "나를 생각해 주었다"는 눈에 보이는 증거가 중요하며, 기념일을 잊거나 성의 없는 선물에는 마음이 쉽게 시립니다.',
+    filled: ['나를 떠올리며 골랐다는 것이 느껴지는 선물을 받을 때', '지나가듯 한 말을 기억해 챙겨줄 때', '특별한 날을 잊지 않고 준비해줄 때'],
+    thirsty: ['기념일이 아무렇지 않게 지나갈 때', '"선물이 뭐가 중요해"라는 말을 들을 때', '정성 없이 급하게 준비한 티가 날 때'],
+    ask: '"비싼 게 아니어도 좋아요. 나를 생각했다는 게 느껴지는 작은 표시가 나에겐 큰 힘이 돼요."',
+    give: ['가격보다 "당신을 생각했다"는 이야기가 담긴 선물을 고르세요', '기념일은 달력에 미리 적어두고 꼭 챙겨주세요', '평범한 날의 작은 선물이 오히려 더 오래 기억됩니다'],
+    mini: '값어치보다, 나를 생각해 준 마음이 담긴 눈에 보이는 표현에 감동합니다.',
+  },
+  D: {
+    lead: '당신은 <b>행동으로 돕는 사랑</b>을 느끼는 사람입니다. "사랑한다"는 말보다 짐을 나눠 드는 손길이 더 크게 다가오며, 말뿐인 약속이나 반복되는 부탁 무시에는 마음이 지칩니다.',
+    filled: ['부탁하기 전에 필요를 알아채고 움직여줄 때', '내 짐과 일을 실제로 나눠 맡아줄 때', '약속한 일을 잊지 않고 해줄 때'],
+    thirsty: ['"말만 하고 행동이 없다"고 느껴질 때', '같은 부탁을 여러 번 반복해야 할 때', '내 수고를 당연하게 여긴다고 느낄 때'],
+    ask: '"오늘은 말보다, 이 일을 함께 해주는 게 저에겐 가장 큰 사랑이에요." — 필요한 도움을 구체적으로 말하세요.',
+    give: ['거창한 일보다 상대가 미뤄둔 작은 일을 대신해보세요', '부탁받은 일은 잊지 말고, 되도록 빨리 해주세요', '"내가 뭘 도와줄까요?"라고 먼저 물어봐 주세요'],
+    mini: '말보다 행동 — 짐을 나눠 들어주는 실질적인 도움에서 사랑을 확인합니다.',
+  },
+  E: {
+    lead: '당신은 <b>따뜻한 접촉</b>으로 사랑을 느끼는 사람입니다. 손을 잡고, 안아주고, 어깨를 토닥이는 순간에 말로 다 못 할 위로와 연결감을 경험하며, 신체적 거리가 곧 마음의 거리로 느껴지기도 합니다.',
+    filled: ['힘들 때 말없이 안아줄 때', '나란히 앉아 손을 잡거나 어깨를 내어줄 때', '만나고 헤어질 때 따뜻하게 포옹할 때'],
+    thirsty: ['곁에 있어도 접촉 없이 데면데면할 때', '위로가 필요할 때 말로만 다독일 때', '스킨십을 귀찮아하는 기색이 느껴질 때'],
+    ask: '"말 안 해도 돼요. 그냥 한 번 안아줄래요?" — 원하는 위로의 방식을 담백하게 청하세요.',
+    give: ['인사할 때, 헤어질 때 가벼운 포옹이나 손잡음을 건네보세요', '힘들어할 때는 설명보다 토닥임이 먼저입니다', '늘 상대가 편안해하는 방식과 정도를 먼저 살펴주세요'],
+    mini: '손잡기, 포옹, 토닥임 — 따뜻한 접촉의 순간에 깊은 연결감을 느낍니다.',
+  },
+};
+
+/* ───────────────────────── 상태 ───────────────────────── */
+let order = [];      // 문항 인덱스 순서 (셔플)
+let flipped = [];    // 각 문항의 보기 순서 뒤집힘 여부
+let answers = [];    // 각 문항에서 고른 언어 key
+let cur = 0;
+
+function shuffle(arr) {
+  const a = arr.slice();
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function show(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  const el = document.getElementById(id);
+  el.classList.remove('active');
+  void el.offsetWidth;
+  el.classList.add('active');
+  window.scrollTo({ top: 0 });
+}
+
+function startQuiz() {
+  order = shuffle(QUESTIONS.map((_, i) => i));
+  flipped = order.map(() => Math.random() < 0.5);
+  answers = new Array(QUESTIONS.length).fill(null);
+  cur = 0;
+  show('screen-quiz');
+  renderQuestion();
+}
+
+function renderQuestion() {
+  const qi = order[cur];
+  const q = QUESTIONS[qi];
+  const opts = flipped[cur] ? [q.b, q.a] : [q.a, q.b];
+  document.getElementById('q-cur').textContent = cur + 1;
+  document.getElementById('progress-fill').style.width = (cur / QUESTIONS.length * 100) + '%';
+  document.getElementById('btn-back').disabled = cur === 0;
+
+  const box = document.getElementById('options');
+  box.innerHTML = '';
+  opts.forEach((opt, i) => {
+    const [langKey, text] = opt;
+    const btn = document.createElement('button');
+    btn.className = 'option' + (answers[cur] === langKey ? ' picked' : '');
+    btn.innerHTML = `<span class="marker">${i === 0 ? '가' : '나'}</span><span>${text}</span>`;
+    btn.onclick = () => pick(langKey, btn);
+    box.appendChild(btn);
+  });
+}
+
+let navLock = false; // 더블탭으로 문항이 건너뛰어지는 것 방지
+function pick(langKey, btn) {
+  if (navLock) return;
+  navLock = true;
+  answers[cur] = langKey;
+  document.querySelectorAll('.option').forEach(o => o.classList.remove('picked'));
+  btn.classList.add('picked');
+  setTimeout(() => {
+    navLock = false;
+    if (cur < QUESTIONS.length - 1) { cur++; renderQuestion(); }
+    else finish();
+  }, 260);
+}
+
+function goBack() {
+  if (!navLock && cur > 0) { cur--; renderQuestion(); }
+}
+
+/* ───────────────────────── 결과 ───────────────────────── */
+let lastRanked = null;
+
+function finish() {
+  const scores = { A:0, B:0, C:0, D:0, E:0 };
+  answers.forEach(k => { if (k) scores[k]++; });
+  const ranked = Object.keys(scores)
+    .map(k => ({ ...LANGS[k], score: scores[k] }))
+    .sort((x, y) => y.score - x.score);
+  lastRanked = ranked;
+
+  const top = ranked[0];
+  const coTops = ranked.filter(r => r.score === top.score);
+  const isTie = coTops.length > 1;
+
+  const nameEl = document.getElementById('result-lang-name');
+  if (isTie) {
+    nameEl.innerHTML = coTops.map(t => `<span style="color:${t.color}">${t.name}</span>`).join('<span style="color:var(--ink-faint)"> · </span>');
+    document.querySelector('.result-title').textContent = '당신의 제1언어는 (공동)';
+  } else {
+    nameEl.innerHTML = `<span style="color:${top.color}">${top.name}</span>`;
+    document.querySelector('.result-title').textContent = '당신의 제1언어는';
+  }
+
+  // 제1언어 상세 카드 (공동 1위면 모두)
+  const card = document.getElementById('primary-card');
+  card.innerHTML = coTops.map((t, idx) => {
+    const p = PROFILES[t.key];
+    return `
+      ${idx > 0 ? '<hr style="border:none;border-top:1px solid var(--line);margin:30px 0">' : ''}
+      ${isTie ? `<h3 style="font-family:var(--serif);font-size:19px;color:${t.color};margin-bottom:14px">${t.name} <span style="font-size:12px;font-family:var(--sans);color:var(--ink-faint);font-weight:400">${t.en}</span></h3>` : ''}
+      <p class="lead">${p.lead}</p>
+      <div class="detail-block"><h3>이럴 때 마음이 채워집니다</h3><ul>${p.filled.map(x=>`<li>${x}</li>`).join('')}</ul></div>
+      <div class="detail-block"><h3>이 언어가 목마를 때의 신호</h3><ul>${p.thirsty.map(x=>`<li>${x}</li>`).join('')}</ul></div>
+      <div class="detail-block"><h3>가까운 사람에게 이렇게 청해보세요</h3><ul><li>${p.ask}</li></ul></div>
+      <div class="detail-block"><h3>이 언어를 쓰는 사람을 사랑하는 법</h3><ul>${p.give.map(x=>`<li>${x}</li>`).join('')}</ul></div>
+    `;
+  }).join('');
+  card.style.borderTopColor = top.color;
+
+  // 점수 막대
+  const bars = document.getElementById('bars');
+  bars.innerHTML = '';
+  let rank = 0, prevScore = null;
+  ranked.forEach((r, i) => {
+    if (r.score !== prevScore) { rank = i; prevScore = r.score; }
+    const label = rank === 0 ? '제1언어' : (rank === 1 ? '제2언어' : '');
+    const pct = Math.round(r.score / 12 * 100);
+    const row = document.createElement('div');
+    row.className = 'bar-row';
+    row.innerHTML = `
+      <div class="bar-head">
+        <div class="bar-name">${r.name}${label ? `<span class="bar-rank">${label}</span>` : ''}</div>
+        <div class="bar-score"><b>${r.score}</b> / 12</div>
+      </div>
+      <div class="bar-track"><div class="bar-fill" data-w="${pct}" style="background:${r.color}"></div></div>
+    `;
+    bars.appendChild(row);
+  });
+
+  // 점수 분포 해석
+  const note = document.getElementById('balance-note');
+  const spread = ranked[0].score - ranked[4].score;
+  if (isTie) {
+    note.style.display = 'block';
+    note.innerHTML = `1위가 <b>${coTops.map(t=>t.name).join('과 ')}</b> 공동입니다. 두 언어 모두 당신에게 중요한 사랑의 통로이니, 가까운 사람에게 두 가지를 함께 알려주세요.`;
+  } else if (spread <= 3) {
+    note.style.display = 'block';
+    note.innerHTML = `다섯 언어의 점수 차이가 크지 않습니다. 당신은 <b>여러 언어를 고루 사용하는 사람</b>일 수 있어요. 그래도 가장 위의 언어부터 살펴보면, 유난히 목마를 때의 마음을 이해하는 데 도움이 됩니다.`;
+  } else {
+    note.style.display = 'none';
+  }
+
+  // 5개 언어 미니 카드
+  const all = document.getElementById('all-langs');
+  all.innerHTML = ranked.map(r => `
+    <div class="mini-card" style="border-left-color:${r.color}">
+      <h4>${r.name} <span class="en">${r.en}</span></h4>
+      <p>${PROFILES[r.key].mini}</p>
+    </div>
+  `).join('');
+
+  show('screen-result');
+  requestAnimationFrame(() => {
+    setTimeout(() => {
+      document.querySelectorAll('.bar-fill').forEach(f => f.style.width = f.dataset.w + '%');
+    }, 120);
+  });
+}
+
+function restart() { startQuiz(); }
+
+/* ───────────────────────── 이미지 저장 ───────────────────────── */
+function saveImage() {
+  if (!lastRanked) return;
+  document.fonts.ready.then(() => {
+    const W = 1080, H = 1350, DPR = 2;
+    const cv = document.createElement('canvas');
+    cv.width = W * DPR; cv.height = H * DPR;
+    const ctx = cv.getContext('2d');
+    ctx.scale(DPR, DPR);
+
+    const serif = '"Gowun Batang", serif';
+    const sans = '"Noto Sans KR", sans-serif';
+
+    // 배경
+    ctx.fillStyle = '#FAF6EF';
+    ctx.fillRect(0, 0, W, H);
+    // 테두리
+    ctx.strokeStyle = '#E5DCCE';
+    ctx.lineWidth = 2;
+    ctx.strokeRect(40, 40, W - 80, H - 80);
+
+    ctx.textAlign = 'center';
+    // 상단 룰
+    ctx.fillStyle = '#B98A4B';
+    ctx.fillRect(W/2 - 24, 110, 48, 3);
+    // 아이브로우
+    ctx.font = `500 20px ${sans}`;
+    ctx.fillStyle = '#B98A4B';
+    ctx.fillText('L O V E   L A N G U A G E', W/2, 165);
+    // 제목
+    ctx.font = `700 52px ${serif}`;
+    ctx.fillStyle = '#2B2430';
+    ctx.fillText('다섯 가지 사랑의 언어', W/2, 240);
+
+    // 제1언어
+    const top = lastRanked[0];
+    const coTops = lastRanked.filter(r => r.score === top.score);
+    ctx.font = `400 26px ${serif}`;
+    ctx.fillStyle = '#5C5462';
+    ctx.fillText(coTops.length > 1 ? '나의 제1언어 (공동)' : '나의 제1언어', W/2, 330);
+    ctx.font = `700 76px ${serif}`;
+    if (coTops.length > 1) {
+      ctx.font = `700 ${coTops.length > 2 ? 44 : 60}px ${serif}`;
+      ctx.fillStyle = top.color;
+      ctx.fillText(coTops.map(t=>t.name).join(' · '), W/2, 420);
+    } else {
+      ctx.fillStyle = top.color;
+      ctx.fillText(top.name, W/2, 425);
+    }
+    ctx.font = `400 22px ${sans}`;
+    ctx.fillStyle = '#8B8390';
+    ctx.fillText(coTops.length > 1 ? '' : top.en, W/2, 465);
+
+    // 점수 막대
+    const barX = 150, barW = W - 300, rowH = 108, startY = 560;
+    ctx.textAlign = 'left';
+    lastRanked.forEach((r, i) => {
+      const y = startY + i * rowH;
+      ctx.font = `700 28px ${serif}`;
+      ctx.fillStyle = '#2B2430';
+      ctx.fillText(r.name, barX, y);
+      ctx.textAlign = 'right';
+      ctx.font = `700 28px ${serif}`;
+      ctx.fillStyle = '#5C5462';
+      ctx.fillText(`${r.score} / 12`, barX + barW, y);
+      ctx.textAlign = 'left';
+      // 트랙
+      const ty = y + 18;
+      roundRect(ctx, barX, ty, barW, 18, 9, '#EFE8DB');
+      const fw = Math.max(18, barW * r.score / 12);
+      roundRect(ctx, barX, ty, fw, 18, 9, r.color);
+    });
+
+    // 하단
+    ctx.textAlign = 'center';
+    ctx.font = `400 20px ${sans}`;
+    ctx.fillStyle = '#8B8390';
+    const d = new Date();
+    ctx.fillText(`${d.getFullYear()}. ${d.getMonth()+1}. ${d.getDate()}.`, W/2, H - 130);
+    ctx.font = `400 18px ${sans}`;
+    ctx.fillText('게리 채프먼 『5가지 사랑의 언어』 개념 기반 자가 점검', W/2, H - 95);
+
+    const a = document.createElement('a');
+    a.download = `사랑의언어_결과_${d.getFullYear()}${String(d.getMonth()+1).padStart(2,'0')}${String(d.getDate()).padStart(2,'0')}.png`;
+    a.href = cv.toDataURL('image/png');
+    a.click();
+  });
+}
+
+function roundRect(ctx, x, y, w, h, r, color) {
+  ctx.fillStyle = color;
+  ctx.beginPath();
+  ctx.moveTo(x + r, y);
+  ctx.arcTo(x + w, y, x + w, y + h, r);
+  ctx.arcTo(x + w, y + h, x, y + h, r);
+  ctx.arcTo(x, y + h, x, y, r);
+  ctx.arcTo(x, y, x + w, y, r);
+  ctx.closePath();
+  ctx.fill();
+}
+</script>
+</body>
+</html>
