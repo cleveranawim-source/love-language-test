@@ -240,6 +240,9 @@
     .meta-row { gap: 18px; font-size: 13px; }
   }
 </style>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Ctext x=%2716%27 y=%2726%27 font-size=%2728%27 text-anchor=%27middle%27 fill=%27%23E85A82%27%3E%E2%99%A5%3C/text%3E%3C/svg%3E">
+<meta name="theme-color" content="#FFF5F3">
+<link rel="stylesheet" href="love.css">
 </head>
 <body>
 <div class="wrap">
@@ -272,7 +275,7 @@
         <div>결과 <b>즉시 확인</b></div>
       </div>
 
-      <button class="btn" onclick="startQuiz()">검사 시작하기</button>
+      <div class="cta-wrap"><button class="btn" onclick="startQuiz()">검사 시작하기</button></div>
       <p style="margin-top:22px;font-size:14px"><a href="deep.html" style="color:var(--primary)">더 정밀한 결과가 필요하신가요? 심층 검사 →</a></p>
 
       <p class="footnote">
@@ -599,20 +602,25 @@ function saveImage() {
     const sans = '"Noto Sans KR", sans-serif';
 
     // 배경
-    ctx.fillStyle = '#FAF6EF';
-    ctx.fillRect(0, 0, W, H);
+    const bgG = ctx.createLinearGradient(0, 0, 0, H);
+    bgG.addColorStop(0, '#FFF1EE'); bgG.addColorStop(0.5, '#FFF8F6'); bgG.addColorStop(1, '#FFE9EF');
+    ctx.fillStyle = bgG; ctx.fillRect(0, 0, W, H);
+    ctx.textAlign = 'center';
+    [[130, 300, 120, 0.10], [940, 200, 90, 0.12], [900, H - 330, 150, 0.09], [150, H - 260, 80, 0.12], [W / 2 + 260, 640, 60, 0.10]].forEach(([hx, hy, hs, ho]) => {
+      ctx.fillStyle = 'rgba(232, 90, 130, ' + ho + ')'; ctx.font = hs + 'px serif'; ctx.fillText('♥', hx, hy);
+    });
     // 테두리
-    ctx.strokeStyle = '#E5DCCE';
+    ctx.strokeStyle = '#F4D8DE';
     ctx.lineWidth = 2;
     ctx.strokeRect(40, 40, W - 80, H - 80);
 
     ctx.textAlign = 'center';
     // 상단 룰
-    ctx.fillStyle = '#B98A4B';
+    ctx.fillStyle = '#E8956B';
     ctx.fillRect(W/2 - 24, 110, 48, 3);
     // 아이브로우
     ctx.font = `500 20px ${sans}`;
-    ctx.fillStyle = '#B98A4B';
+    ctx.fillStyle = '#E8956B';
     ctx.fillText('L O V E   L A N G U A G E', W/2, 165);
     // 제목
     ctx.font = `700 52px ${serif}`;
@@ -653,7 +661,7 @@ function saveImage() {
       ctx.textAlign = 'left';
       // 트랙
       const ty = y + 18;
-      roundRect(ctx, barX, ty, barW, 18, 9, '#EFE8DB');
+      roundRect(ctx, barX, ty, barW, 18, 9, '#FCE3E9');
       const fw = Math.max(18, barW * r.score / 12);
       roundRect(ctx, barX, ty, fw, 18, 9, r.color);
     });
@@ -686,5 +694,6 @@ function roundRect(ctx, x, y, w, h, r, color) {
   ctx.fill();
 }
 </script>
+<script src="love.js" defer></script>
 </body>
 </html>

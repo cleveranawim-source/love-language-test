@@ -1,0 +1,202 @@
+/* 러블리 테마 — 기존 스타일 위에 덧입힌다(기능 코드는 그대로).
+   장미·피치 파스텔 / 떠오르는 하트 / 선택 시 하트 퍼짐 / 큼직한 시작 버튼 */
+@import url('https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap');
+
+:root {
+  --bg: #FFF5F3;
+  --paper: #FFFFFF;
+  --ink: #3A2430;
+  --ink-soft: #6B4F5C;
+  --ink-faint: #94808A;
+  --line: #F4D8DE;
+  --primary: #C93D63;
+  --primary-deep: #9E2A4C;
+  --gold: #E8956B;
+  --rose-1: #E85A82;
+  --rose-2: #B8325A;
+  --blush: #FFE9EE;
+  --sans: 'Gowun Dodum', 'Noto Sans KR', -apple-system, sans-serif;
+  --glow: 0 14px 34px rgba(201, 61, 99, .14);
+}
+
+html { scroll-behavior: smooth; }
+body {
+  background:
+    radial-gradient(900px 520px at 85% -8%, rgba(255, 186, 200, .55), transparent 60%),
+    radial-gradient(760px 480px at -6% 40%, rgba(255, 214, 190, .50), transparent 60%),
+    radial-gradient(800px 560px at 100% 105%, rgba(240, 190, 225, .38), transparent 60%),
+    linear-gradient(180deg, #FFF4F1 0%, #FFF8F6 50%, #FFEFF3 100%) !important;
+  background-attachment: fixed !important;
+  color: var(--ink);
+}
+.wrap { position: relative; z-index: 1; }
+
+/* ───────── 떠오르는 하트 ───────── */
+.love-hearts { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
+.love-hearts i {
+  position: absolute; bottom: -40px; font-style: normal; line-height: 1;
+  animation: lh-float linear infinite; will-change: transform, opacity;
+}
+@keyframes lh-float {
+  0%   { transform: translate3d(0, 0, 0) rotate(-8deg); opacity: 0; }
+  10%  { opacity: var(--o, .2); }
+  50%  { transform: translate3d(var(--sway, 24px), -55vh, 0) rotate(8deg); }
+  90%  { opacity: var(--o, .2); }
+  100% { transform: translate3d(calc(var(--sway, 24px) * -1), -112vh, 0) rotate(-6deg); opacity: 0; }
+}
+
+/* 선택 시 하트 퍼짐 + 결과 하트 비 */
+.love-burst { position: fixed; z-index: 9999; pointer-events: none; font-style: normal; line-height: 1; animation: lb-pop .9s cubic-bezier(.2, .7, .3, 1) forwards; }
+@keyframes lb-pop {
+  0%   { transform: translate(-50%, -50%) scale(.3); opacity: 1; }
+  100% { transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))) scale(1) rotate(var(--rot, 0deg)); opacity: 0; }
+}
+.love-rain { position: fixed; top: -40px; z-index: 9999; pointer-events: none; font-style: normal; line-height: 1; animation: lr-fall linear forwards; }
+@keyframes lr-fall {
+  0%   { transform: translate3d(0, 0, 0) rotate(0deg); opacity: 0; }
+  8%   { opacity: .95; }
+  100% { transform: translate3d(var(--drift, 0px), 112vh, 0) rotate(var(--spin, 200deg)); opacity: 0; }
+}
+
+/* ───────── 표지 ───────── */
+.cover-rule { width: auto !important; height: auto !important; background: none !important; margin: 0 auto 18px !important; text-align: center; line-height: 1; }
+.cover-rule::before { content: "♥"; font-size: 30px; color: var(--primary); text-shadow: 0 6px 16px rgba(201, 61, 99, .35); animation: heartbeat 2.4s ease-in-out infinite; display: inline-block; }
+.cover-eyebrow { color: var(--gold) !important; }
+.cover h1 { letter-spacing: -.01em; }
+.cover h1 .accent {
+  background: linear-gradient(120deg, #E85A82 0%, #C93D63 45%, #E8956B 100%);
+  -webkit-background-clip: text; background-clip: text; color: transparent !important;
+}
+.cover-sub { color: var(--ink-soft) !important; }
+.cover-card, .ver-card, .primary-card, .combo-card, .compare-box, .mini-card, .likert-stmt, .cmp-card, .couple-link {
+  border-radius: 22px !important;
+  border-color: var(--line) !important;
+  box-shadow: var(--glow);
+}
+.cover-card h2, .part-list .no { color: var(--primary) !important; }
+.cover-card p b { color: var(--primary-deep); }
+.chip, .conf-badge { box-shadow: 0 6px 14px rgba(201, 61, 99, .14); }
+.conf-badge { background: var(--blush) !important; color: var(--primary-deep) !important; }
+.footnote { color: var(--ink-faint) !important; }
+.back-home:hover, .nav-back:hover { color: var(--primary) !important; }
+
+/* ───────── 버튼 (시작 버튼은 특히 크고 눈에 띄게) ───────── */
+.btn {
+  background: linear-gradient(135deg, var(--rose-1), var(--rose-2)) !important;
+  box-shadow: 0 12px 28px rgba(201, 61, 99, .34) !important;
+  border-radius: 999px !important;
+  position: relative; overflow: hidden;
+  transition: transform .18s, box-shadow .18s !important;
+}
+.btn:hover { transform: translateY(-2px) scale(1.02) !important; box-shadow: 0 18px 38px rgba(201, 61, 99, .44) !important; }
+.btn:active { transform: translateY(0) scale(.98) !important; }
+.btn-ghost { background: rgba(255, 255, 255, .7) !important; color: var(--primary) !important; border: 1.5px solid var(--primary) !important; box-shadow: none !important; }
+.btn-ghost:hover { background: var(--blush) !important; }
+
+/* 시작 버튼: 표지의 큰 버튼 */
+.cover .btn:not(.btn-ghost):not(.btn-small) {
+  font-size: 20px !important; font-weight: 700 !important; letter-spacing: .06em !important;
+  padding: 22px 64px !important; min-width: min(86vw, 360px);
+  animation: cta-pulse 2.2s ease-in-out infinite;
+}
+.cover .btn:not(.btn-ghost):not(.btn-small)::before {
+  content: ""; position: absolute; top: 0; bottom: 0; left: -70%; width: 45%;
+  background: linear-gradient(100deg, transparent, rgba(255, 255, 255, .55), transparent);
+  transform: skewX(-20deg); animation: cta-shine 3.2s ease-in-out infinite;
+}
+.cover .btn:not(.btn-ghost):not(.btn-small)::after { content: "  ♥"; }
+@keyframes cta-pulse {
+  0%, 100% { box-shadow: 0 12px 28px rgba(201, 61, 99, .34), 0 0 0 0 rgba(232, 90, 130, .45); }
+  50%      { box-shadow: 0 16px 36px rgba(201, 61, 99, .44), 0 0 0 16px rgba(232, 90, 130, 0); }
+}
+@keyframes cta-shine { 0% { left: -70%; } 55%, 100% { left: 130%; } }
+@keyframes heartbeat { 0%, 100% { transform: scale(1); } 14% { transform: scale(1.22); } 28% { transform: scale(1); } 42% { transform: scale(1.16); } 56% { transform: scale(1); } }
+
+/* ───────── 문항 ───────── */
+.progress-track { height: 9px !important; background: #FBDDE4 !important; overflow: visible !important; border-radius: 999px !important; }
+.progress-fill { position: relative; background: linear-gradient(90deg, #F59AB2, var(--rose-1), var(--rose-2)) !important; border-radius: 999px !important; }
+.progress-fill::after { content: "♥"; position: absolute; right: -9px; top: -10px; font-size: 22px; line-height: 1; color: var(--rose-2); filter: drop-shadow(0 3px 5px rgba(201, 61, 99, .35)); animation: heartbeat 1.6s ease-in-out infinite; }
+.progress-num, .part-tag { color: var(--primary) !important; }
+.quiz-prompt, .section-label, .rpt-h { color: var(--ink) !important; }
+.option { border-radius: 20px !important; border-color: var(--line) !important; background: #fff !important; box-shadow: 0 8px 20px rgba(201, 61, 99, .06); }
+.option:hover { border-color: var(--rose-1) !important; background: #FFF7F9 !important; transform: translateY(-2px); box-shadow: 0 14px 28px rgba(201, 61, 99, .14); }
+.option .marker { border-color: #F2C6D1 !important; color: var(--primary) !important; background: #FFF3F6; }
+.option.picked { border-color: var(--rose-1) !important; background: linear-gradient(135deg, #FFF0F4, #FFE3EA) !important; box-shadow: 0 14px 30px rgba(232, 90, 130, .25); }
+.option.picked .marker { background: linear-gradient(135deg, var(--rose-1), var(--rose-2)) !important; border-color: transparent !important; font-size: 0 !important; }
+.option.picked .marker::after { content: "♥"; font-size: 16px; color: #fff; }
+.likert-btn { border-radius: 16px !important; border-color: var(--line) !important; }
+.likert-btn:hover { border-color: var(--rose-1) !important; background: #FFF7F9 !important; }
+.likert-btn.picked { background: linear-gradient(135deg, var(--rose-1), var(--rose-2)) !important; border-color: transparent !important; box-shadow: 0 10px 22px rgba(232, 90, 130, .35); }
+.part-intro .no { color: var(--gold) !important; }
+.part-intro h2 { color: var(--ink); }
+
+/* ───────── 결과 ───────── */
+.result-eyebrow { color: var(--gold) !important; }
+.result-eyebrow::before, .result-eyebrow::after { content: "♥"; color: var(--rose-1); margin: 0 10px; letter-spacing: 0; font-size: 14px; }
+.primary-card { background: linear-gradient(180deg, #FFFFFF, #FFFAFB) !important; }
+.combo-card { border-left: 5px solid var(--rose-1) !important; background: linear-gradient(135deg, #FFFFFF, #FFF6F8) !important; }
+.combo-card .combo-tag { color: var(--gold) !important; }
+.detail-block h3 { color: var(--primary-deep) !important; }
+.detail-block li::before { background: var(--rose-1) !important; }
+.bar-track { height: 14px !important; background: #FCE3E9 !important; }
+.bar-fill { box-shadow: inset 0 -3px 0 rgba(0, 0, 0, .08), inset 0 3px 0 rgba(255, 255, 255, .28); }
+.balance-note, .note-box { background: #FFEEF2 !important; border-radius: 18px !important; border: 1px dashed #F2B5C4; }
+.note-box b, .balance-note b { color: var(--primary-deep) !important; }
+.mini-card { border-left-width: 5px !important; }
+.rpt-h { border-bottom: 2px solid #F4B6C5 !important; }
+.delivery { background: #FFF6F8 !important; border-left-color: var(--rose-1) !important; border-radius: 14px !important; }
+.delivery h4 { color: var(--primary-deep) !important; }
+.code-chip { background: var(--blush) !important; color: var(--primary-deep) !important; }
+.code-input { border-radius: 14px !important; border-color: var(--line) !important; }
+.code-input:focus { border-color: var(--rose-1) !important; box-shadow: 0 0 0 4px rgba(232, 90, 130, .15); }
+.cmp-card .who { color: var(--gold) !important; }
+
+/* ───────── 랜딩 ───────── */
+.pick-label { color: var(--primary-deep) !important; }
+.ver-card { transition: transform .18s, box-shadow .18s, border-color .18s !important; }
+.ver-card:hover { border-color: var(--rose-1) !important; box-shadow: 0 22px 44px rgba(201, 61, 99, .22) !important; transform: translateY(-4px) !important; }
+.ver-card.featured { border-color: var(--rose-1) !important; background: linear-gradient(180deg, #FFFFFF, #FFF5F8) !important; }
+.ver-badge { background: linear-gradient(135deg, var(--rose-1), var(--rose-2)) !important; box-shadow: 0 8px 18px rgba(201, 61, 99, .35); }
+.ver-badge::before { content: "♥ "; }
+.ver-card li::before { background: var(--rose-1) !important; }
+.ver-meta b { color: var(--primary-deep) !important; }
+/* 시작 링크 → 눈에 띄는 채워진 버튼 */
+.ver-go {
+  display: block; text-align: center; margin-top: 8px; padding: 16px 20px; border-radius: 999px;
+  font-size: 17px !important; font-weight: 700; letter-spacing: .04em; color: var(--primary) !important;
+  background: var(--blush); border: 1.5px solid #F2B5C4; transition: all .18s;
+}
+.ver-card:hover .ver-go { background: linear-gradient(135deg, var(--rose-1), var(--rose-2)); color: #fff !important; border-color: transparent; box-shadow: 0 10px 22px rgba(201, 61, 99, .35); }
+.ver-card.featured .ver-go {
+  position: relative; overflow: hidden; color: #fff !important; border-color: transparent;
+  background: linear-gradient(135deg, var(--rose-1), var(--rose-2)); box-shadow: 0 12px 26px rgba(201, 61, 99, .38);
+  animation: cta-pulse 2.2s ease-in-out infinite;
+}
+.ver-card.featured .ver-go::before {
+  content: ""; position: absolute; top: 0; bottom: 0; left: -70%; width: 45%;
+  background: linear-gradient(100deg, transparent, rgba(255, 255, 255, .55), transparent); transform: skewX(-20deg); animation: cta-shine 3.2s ease-in-out infinite;
+}
+.couple-link { background: #FFF1F4 !important; border: 1.5px dashed #F2A8BB !important; }
+.couple-link:hover { border-color: var(--rose-1) !important; background: #FFE8EE !important; }
+.couple-link b { color: var(--primary-deep) !important; }
+
+/* 시작 버튼은 화면 아래에 떠 있어 스크롤 없이도 바로 보인다(작은 화면·낮은 화면) */
+.cta-wrap { text-align: center; margin-bottom: 26px; }
+@media (max-width: 640px), (max-height: 860px) {
+  .cta-wrap { position: sticky; bottom: 0; z-index: 20; padding: 26px 0 max(14px, env(safe-area-inset-bottom)); margin: 0 -24px 14px;
+    background: linear-gradient(0deg, rgba(255, 245, 243, .97) 55%, rgba(255, 245, 243, 0)); }
+}
+
+/* ───────── 접근성·인쇄 ───────── */
+@media (max-width: 480px) {
+  .cover .btn:not(.btn-ghost):not(.btn-small) { padding: 22px 28px !important; font-size: 19px !important; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .love-hearts, .love-burst, .love-rain { display: none !important; }
+  .btn, .ver-go, .cover-rule::before, .progress-fill::after, .cover .btn::before, .ver-go::before { animation: none !important; }
+}
+@media print {
+  .love-hearts, .love-burst, .love-rain { display: none !important; }
+  body { background: #fff !important; }
+  .cover-rule, .result-eyebrow::before, .result-eyebrow::after { display: none; }
+}

@@ -176,6 +176,9 @@
     .meta-row { gap: 18px; font-size: 13px; }
   }
 </style>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Ctext x=%2716%27 y=%2726%27 font-size=%2728%27 text-anchor=%27middle%27 fill=%27%23E85A82%27%3E%E2%99%A5%3C/text%3E%3C/svg%3E">
+<meta name="theme-color" content="#FFF5F3">
+<link rel="stylesheet" href="love.css">
 </head>
 <body>
 <div class="wrap">
@@ -205,7 +208,7 @@
         <div>커플 비교 <b>지원</b></div>
       </div>
 
-      <p style="margin-bottom:28px"><button class="btn" onclick="startQuiz()">심층 검사 시작하기</button></p>
+      <div class="cta-wrap"><button class="btn" onclick="startQuiz()">심층 검사 시작하기</button></div>
       <p><a class="back-home" href="index.html">← 처음으로</a> &nbsp;·&nbsp; <a class="back-home" href="light.html">라이트 검사(7분)로 하기</a></p>
       <p style="margin-top:24px"><a class="back-home" href="#compare" onclick="showCompareOnly();return false;">두 사람의 결과 코드로 커플 상담 리포트 만들기 →</a></p>
 
@@ -1048,11 +1051,17 @@ function saveImage() {
     const conf = confidence(gap);
     const expRk = ORDER5.slice().sort((x, y) => (exp[y] - exp[x]) || (fc[y] - fc[x]));
 
-    ctx.fillStyle = '#FAF6EF'; ctx.fillRect(0, 0, W, H);
-    ctx.strokeStyle = '#E5DCCE'; ctx.lineWidth = 2; ctx.strokeRect(40, 40, W - 80, H - 80);
+    const bgG = ctx.createLinearGradient(0, 0, 0, H);
+    bgG.addColorStop(0, '#FFF1EE'); bgG.addColorStop(0.5, '#FFF8F6'); bgG.addColorStop(1, '#FFE9EF');
+    ctx.fillStyle = bgG; ctx.fillRect(0, 0, W, H);
     ctx.textAlign = 'center';
-    ctx.fillStyle = '#B98A4B'; ctx.fillRect(W/2 - 24, 100, 48, 3);
-    ctx.font = `500 20px ${sans}`; ctx.fillStyle = '#B98A4B';
+    [[130, 300, 120, 0.10], [940, 200, 90, 0.12], [900, H - 330, 150, 0.09], [150, H - 260, 80, 0.12], [W / 2 + 260, 640, 60, 0.10]].forEach(([hx, hy, hs, ho]) => {
+      ctx.fillStyle = 'rgba(232, 90, 130, ' + ho + ')'; ctx.font = hs + 'px serif'; ctx.fillText('♥', hx, hy);
+    });
+    ctx.strokeStyle = '#F4D8DE'; ctx.lineWidth = 2; ctx.strokeRect(40, 40, W - 80, H - 80);
+    ctx.textAlign = 'center';
+    ctx.fillStyle = '#E8956B'; ctx.fillRect(W/2 - 24, 100, 48, 3);
+    ctx.font = `500 20px ${sans}`; ctx.fillStyle = '#E8956B';
     ctx.fillText('L O V E   L A N G U A G E  ·  I N - D E P T H', W/2, 155);
     ctx.font = `700 48px ${serif}`; ctx.fillStyle = '#2B2430';
     ctx.fillText('나의 사랑의 언어 찾기 · 심층', W/2, 228);
@@ -1061,12 +1070,12 @@ function saveImage() {
     ctx.fillText(gap === 0 ? '나의 제1언어 (공동)' : '나의 제1언어', W/2, 312);
     ctx.font = `700 72px ${serif}`; ctx.fillStyle = top.color;
     ctx.fillText(gap === 0 ? `${top.name} · ${LANGS[rk[1]].name}` : top.name, W/2, 400);
-    ctx.font = `500 24px ${sans}`; ctx.fillStyle = '#6E2C3F';
+    ctx.font = `500 24px ${sans}`; ctx.fillStyle = '#9E2A4C';
     ctx.fillText(conf.label, W/2, 448);
 
     const barX = 150, barW = W - 300, rowH = 104, startY = 545;
     ctx.textAlign = 'left';
-    ctx.font = `700 24px ${sans}`; ctx.fillStyle = '#6E2C3F';
+    ctx.font = `700 24px ${sans}`; ctx.fillStyle = '#9E2A4C';
     ctx.fillText('받고 싶은 사랑 (20점 만점)', barX, startY - 40);
     rk.forEach((k, i) => {
       const y = startY + i * rowH;
@@ -1077,14 +1086,14 @@ function saveImage() {
       ctx.fillText(`${fc[k]} / 20`, barX + barW, y);
       ctx.textAlign = 'left';
       const ty = y + 16;
-      roundRect(ctx, barX, ty, barW, 16, 8, '#EFE8DB');
+      roundRect(ctx, barX, ty, barW, 16, 8, '#FCE3E9');
       roundRect(ctx, barX, ty, Math.max(16, barW * fc[k] / 20), 16, 8, LANGS[k].color);
       ctx.font = `400 19px ${sans}`; ctx.fillStyle = '#8B8390';
       ctx.fillText(`갈망 강도 ${Math.round((rec[k]-4)/16*100)}%`, barX, ty + 42);
     });
 
     const y2 = startY + 5 * rowH + 30;
-    ctx.font = `700 24px ${sans}`; ctx.fillStyle = '#6E2C3F';
+    ctx.font = `700 24px ${sans}`; ctx.fillStyle = '#9E2A4C';
     ctx.fillText('내가 표현하는 방식', barX, y2);
     ctx.font = `700 34px ${serif}`; ctx.fillStyle = LANGS[expRk[0]].color;
     ctx.fillText(LANGS[expRk[0]].name, barX, y2 + 48);
@@ -1116,5 +1125,6 @@ function roundRect(ctx, x, y, w, h, r, color) {
   ctx.fill();
 }
 </script>
+<script src="love.js" defer></script>
 </body>
 </html>
