@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>다섯 가지 사랑의 언어 — 심층 검사</title>
-<meta name="description" content="수용·표현·강도까지 입체적으로 측정하는 사랑의 언어 심층 검사. 85문항, 약 15분. 커플 비교 지원.">
+<title>나의 사랑의 언어 찾기 — 심층</title>
+<meta name="description" content="사랑의 언어 개념에서 출발한 비공식 자가 점검 도구. 성인용, 라이트(7분)와 심층(15분).">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
@@ -210,9 +210,7 @@
       <p style="margin-top:24px"><a class="back-home" href="#compare" onclick="showCompareOnly();return false;">두 사람의 결과 코드로 커플 상담 리포트 만들기 →</a></p>
 
       <p class="footnote">
-        게리 채프먼(Gary Chapman)의 『5가지 사랑의 언어』 개념을 바탕으로 새롭게 구성한<br>
-        자가 점검 도구입니다. 원저작의 공식 검사와는 다르며, 교육·상담의 참고 자료로<br>
-        활용해 주세요. 응답 내용은 어디에도 저장되지 않습니다.
+        이 검사는 게리 채프먼(Gary Chapman)이 소개한 사랑의 언어 개념에서 출발해 새로 만든 <b>비공식 자가 점검 도구</b>입니다.<br>채프먼 및 원저작 출판사와 무관하며 공식 검사가 아닙니다. 『5가지 사랑의 언어』·'The 5 Love Languages'는 해당 권리자의 저작물·상표입니다.<br>교육·상담의 참고 자료로만 활용해 주세요. 응답 내용은 어디에도 저장되지 않습니다.
       </p>
     </div>
   </section>
@@ -1057,7 +1055,7 @@ function saveImage() {
     ctx.font = `500 20px ${sans}`; ctx.fillStyle = '#B98A4B';
     ctx.fillText('L O V E   L A N G U A G E  ·  I N - D E P T H', W/2, 155);
     ctx.font = `700 48px ${serif}`; ctx.fillStyle = '#2B2430';
-    ctx.fillText('사랑의 언어 심층 검사', W/2, 228);
+    ctx.fillText('나의 사랑의 언어 찾기 · 심층', W/2, 228);
 
     ctx.font = `400 26px ${serif}`; ctx.fillStyle = '#5C5462';
     ctx.fillText(gap === 0 ? '나의 제1언어 (공동)' : '나의 제1언어', W/2, 312);
@@ -1098,7 +1096,7 @@ function saveImage() {
     ctx.font = `400 20px ${sans}`; ctx.fillStyle = '#8B8390';
     ctx.fillText(`${d.getFullYear()}. ${d.getMonth()+1}. ${d.getDate()}.  ·  결과 코드 ${encodeCode(scores)}`, W/2, H - 120);
     ctx.font = `400 18px ${sans}`;
-    ctx.fillText('게리 채프먼 『5가지 사랑의 언어』 개념 기반 자가 점검', W/2, H - 86);
+    ctx.fillText('채프먼의 사랑의 언어 개념에서 출발한 비공식 자가 점검', W/2, H - 86);
 
     const a = document.createElement('a');
     a.download = `사랑의언어_심층결과_${d.getFullYear()}${String(d.getMonth()+1).padStart(2,'0')}${String(d.getDate()).padStart(2,'0')}.png`;
