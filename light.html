@@ -7,7 +7,6 @@
 <meta name="description" content="사랑의 언어 개념에서 출발한 비공식 자가 점검 도구. 성인용, 라이트(7분)와 심층(15분).">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
 <style>
   :root {
     --bg: #FAF6EF;
@@ -591,15 +590,15 @@ function restart() { startQuiz(); }
 /* ───────────────────────── 이미지 저장 ───────────────────────── */
 function saveImage() {
   if (!lastRanked) return;
-  document.fonts.ready.then(() => {
+  Promise.all([document.fonts.load('700 24px "GmarketSans"'), document.fonts.load('500 24px "Pretendard Variable"'), document.fonts.load('700 24px "Pretendard Variable"')]).catch(() => {}).then(() => {
     const W = 1080, H = 1350, DPR = 2;
     const cv = document.createElement('canvas');
     cv.width = W * DPR; cv.height = H * DPR;
     const ctx = cv.getContext('2d');
     ctx.scale(DPR, DPR);
 
-    const serif = '"Gowun Batang", serif';
-    const sans = '"Noto Sans KR", sans-serif';
+    const serif = '"GmarketSans", "Pretendard Variable", sans-serif';
+    const sans = '"Pretendard Variable", Pretendard, sans-serif';
 
     // 배경
     const bgG = ctx.createLinearGradient(0, 0, 0, H);

@@ -1,6 +1,11 @@
 /* 러블리 테마 — 기존 스타일 위에 덧입힌다(기능 코드는 그대로).
    장미·피치 파스텔 / 떠오르는 하트 / 선택 시 하트 퍼짐 / 큼직한 시작 버튼 */
-@import url('https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap');
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css');
+/* 제목용 Gmarket Sans (Bold 하나만 — 용량 절약) */
+@font-face {
+  font-family: 'GmarketSans'; font-weight: 700; font-style: normal; font-display: swap;
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansBold.woff') format('woff');
+}
 
 :root {
   --bg: #FFF5F3;
@@ -15,7 +20,9 @@
   --rose-1: #E85A82;
   --rose-2: #B8325A;
   --blush: #FFE9EE;
-  --sans: 'Gowun Dodum', 'Noto Sans KR', -apple-system, sans-serif;
+  --sans: 'Pretendard Variable', Pretendard, -apple-system, 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
+  --serif: 'Pretendard Variable', Pretendard, -apple-system, 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
+  --display: 'GmarketSans', 'Pretendard Variable', Pretendard, sans-serif;
   --glow: 0 14px 34px rgba(201, 61, 99, .14);
 }
 
@@ -57,6 +64,24 @@ body {
   8%   { opacity: .95; }
   100% { transform: translate3d(var(--drift, 0px), 112vh, 0) rotate(var(--spin, 200deg)); opacity: 0; }
 }
+
+
+/* ───────── 타이포그래피 (트렌디: Pretendard 본문 + Gmarket Sans 제목) ───────── */
+body { font-family: var(--sans); font-weight: 400; letter-spacing: -0.015em; word-break: keep-all; -webkit-font-smoothing: antialiased; }
+h1, h2, h3, .cover h1, .quiz-prompt, .result-lang, .section-label, .rpt-h, .combo-card h3, .ver-card h2, .cover-card h2,
+.part-intro h2, .pick-label, .progress-num, .bar-name, .cmp-card .lang, .mini-card h4, .likert-btn .num, .conf-badge, .btn, .ver-go, .ver-badge, .couple-link b, .part-list .no {
+  font-family: var(--display) !important; letter-spacing: -0.02em;
+}
+.cover h1 { line-height: 1.28; }
+.quiz-prompt, .result-lang { line-height: 1.38; }
+.option, .likert-stmt, .primary-card .lead, .combo-card p, .cover-sub, .part-intro p, .bar-score, .delivery p {
+  font-family: var(--sans) !important; font-weight: 500;
+}
+.option { font-size: clamp(16px, 3.6vw, 18px) !important; line-height: 1.6 !important; }
+.cover-sub { font-weight: 500; }
+.btn { letter-spacing: .02em !important; }
+.cover .btn:not(.btn-ghost):not(.btn-small) { letter-spacing: .01em !important; }
+.eyebrow, .cover-eyebrow, .result-eyebrow, .part-tag { font-family: var(--sans) !important; font-weight: 700; }
 
 /* ───────── 표지 ───────── */
 .cover-rule { width: auto !important; height: auto !important; background: none !important; margin: 0 auto 18px !important; text-align: center; line-height: 1; }
@@ -200,3 +225,7 @@ body {
   body { background: #fff !important; }
   .cover-rule, .result-eyebrow::before, .result-eyebrow::after { display: none; }
 }
+
+/* 소제목 자간 정돈 */
+.detail-block h3, .part-tag, .combo-card .combo-tag, .cmp-card .who, .rpt-h { letter-spacing: .02em !important; }
+.cover-eyebrow, .result-eyebrow { letter-spacing: .3em !important; }
